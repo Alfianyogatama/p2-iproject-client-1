@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/conversation">Chat</router-link> |
+      <router-link to="/login">login</router-link> |
+      <a @click.prevent="logout" href="#">logout</a>
       <router-view />
     </div>
   </div>
@@ -11,9 +15,22 @@
     name: "App",
     components: {
       // Inbox
+    },
+    created(){
+      if (localStorage.access_token) {
+        this.$store.commit('SET_ISLOGIN')
+      }
+    },
+
+    methods: {
+      logout(){
+        localStorage.clear()
+        this.$router.push('/login')
+      }
     }
   }
 </script>
+
 <style>
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

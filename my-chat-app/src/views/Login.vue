@@ -60,10 +60,18 @@
 
 		methods: {
 			async login(){
-				const result = this.$store.dispatch('userLogin', {loginData:this.loginData})
-				if (result) {
-					this.$router.push('/inbox')
+				try{
+					const login = await this.$store.dispatch('userLogin', {loginData:this.loginData})
+					if (login) {
+						const {data} = await this.$store.dispatch('getConversations')
+						if (data) {
+							this.$router.push({name:'Home'})
+						}
+					}
 				}
+				catch(err){
+					console.log(err);
+				}	
 			}
 		}
 	}

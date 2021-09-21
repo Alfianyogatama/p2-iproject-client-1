@@ -6,23 +6,36 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isLogin: false,
+    selectedGroup : {
+      id : ""
+    },
     user : {},
     conversationlists: [],
     chatbox:[]
   },
   mutations: {
+    SET_ISLOGIN : (state) => {
+      state.isLogin = true
+    },
+
     SET_USER : (state, payload) => {
       state.user = payload.user
-    } ,
+    },
 
     SET_CONVLISTS : (state, payload) => {
       state.conversationlists = payload.data
+    },
+
+    SET_SELECTGROUP : (state, payload) => {
+      state.selectedGroup.id = payload.id
     },
 
     SET_CHATBOX : (state, payload) => {
       state.chatbox = payload.data
     }
   },
+
   actions: {
     userLogin : async ({commit}, payload) => {
       try{
@@ -31,10 +44,9 @@ export default new Vuex.Store({
           commit(`SET_USER`, {
             user: data
           })
-
           localStorage.setItem('access_token',  data.access_token)
-
           return true
+
         }
       }
       catch(err){
@@ -47,6 +59,7 @@ export default new Vuex.Store({
         const {data} = await api.get('/chats/lists')
         if (data) {
           commit('SET_CONVLISTS', data)
+          return data
         }
       }
       catch(err){
@@ -54,21 +67,20 @@ export default new Vuex.Store({
       }
     },
 
-    chatbox: async({commit}, payload) => {
-      try{
-        const {data} = await api.get('/chats/groups/messages', payload, {})
+    // chatbox: async({commit}, payload) => {
+    //   try{
+    //     const {data} = await api.get('/chats/groups/messages', payload, {})
         
-        if (data) {
-          console.log(data);
-          commit('SET_CHATBOX', data.messages)
-        }
+    //     if (data) {
+    //       commit('SET_CHATBOX', data.messages)
+    //     }
 
-      }
-      catch(err){
-        console.log(err);
-      }
-    }
+    //   }
+    //   catch(err){
+    //     console.log(err);
+    //   }
+    // },
+
   },  
-  modules: {
-  }
+
 })

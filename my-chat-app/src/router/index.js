@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Conversation from '../views/Conversation.vue'
 import Inbox from '../components/Inbox.vue'
 
 Vue.use(VueRouter)
@@ -23,13 +24,11 @@ const routes = [
     component: Inbox
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/conversation/:id',
+    name: 'Conversation',
+    component: Conversation
   }
+
 ]
 
 const router = new VueRouter({
