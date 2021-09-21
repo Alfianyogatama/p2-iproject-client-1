@@ -62,7 +62,7 @@
 			async login(){
 				const result = this.$store.dispatch('userLogin', {loginData:this.loginData})
 				if (result) {
-					this.$router.push('/about')
+					this.$router.push('/inbox')
 				}
 			}
 		}

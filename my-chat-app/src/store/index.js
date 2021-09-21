@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './../apis'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -57,15 +56,8 @@ export default new Vuex.Store({
 
     chatbox: async({commit}, payload) => {
       try{
-        // const {data} = await api.get('/chats/groups/messages', payload, {})
-        const {data} = await axios.request({
-          method : 'GET',
-          url: 'http://localhost:3000/chats/groups/messages',
-          headers: {
-            access_token: localStorage.access_token
-          },
-          data: payload
-        })
+        const {data} = await api.get('/chats/groups/messages', payload, {})
+        
         if (data) {
           console.log(data);
           commit('SET_CHATBOX', data.messages)
