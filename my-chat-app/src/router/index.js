@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Inbox from '../components/Inbox.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,6 +16,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/inbox',
+    name: 'Inbox',
+    component: Inbox
   },
   {
     path: '/about',
