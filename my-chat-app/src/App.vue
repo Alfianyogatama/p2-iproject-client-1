@@ -1,24 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/conversation">Chat</router-link> |
-      <router-link to="/login">login</router-link> |
-      <a @click.prevent="logout" href="#">logout</a>
+      <Navbar />
       <router-view />
-    </div>
   </div>
 </template>
 <script>
-  // import Inbox from "@/components/Inbox"
+  import Navbar from "@/components/Navbar"
   export default{
     name: "App",
     components: {
-      // Inbox
+      Navbar
     },
     created(){
       if (localStorage.access_token) {
-        this.$store.commit('SET_ISLOGIN')
+        this.$store.commit('SET_ISLOGIN', true)
       }
     },
 

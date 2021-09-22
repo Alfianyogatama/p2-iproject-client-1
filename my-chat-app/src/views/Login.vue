@@ -1,9 +1,9 @@
 <template>
-	<div class="w-full min-h-screen">
+	<div class="w-full min-h-screen bg-gray-800 flex flex-wrap content-center">
 		<form  @submit.prevent="login" class="w-full mx-auto max-w-sm border-2 p-3 rounded-xl shadow-md">
 			<div class="md:flex md:items-center mb-6">
 				<div class="md:w-1/3">
-					<label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+					<label class="block text-white font-thin text-sm md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
 						Email
 					</label>
 				</div>
@@ -15,7 +15,7 @@
 			</div>
 			<div class="md:flex md:items-center mb-6">
 				<div class="md:w-1/3">
-					<label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
+					<label class="block text-white font-thin text-sm md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
 						Password
 					</label>
 				</div>
@@ -65,7 +65,7 @@
 					if (login) {
 						const {data} = await this.$store.dispatch('getConversations')
 						if (data) {
-							this.$router.push({name:'Home'})
+							this.$router.push('/')
 						}
 					}
 				}

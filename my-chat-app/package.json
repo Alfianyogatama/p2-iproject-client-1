@@ -13,6 +13,7 @@
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "postcss": "^7",
+    "sweetalert2": "^11.1.6",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "talkjs": "^0.14.5",
     "vue": "^2.6.11",

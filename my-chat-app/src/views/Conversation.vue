@@ -1,14 +1,10 @@
 <template>
   <div class="flex w-full min-h-screen">
-    <Chatlist />
-    <div class="min-h-screen w-full">
-      <Inbox />
-    </div>
+    <p>Chatlist</p>
   </div>
 </template>
 <script>
-import Inbox from '@/components/Inbox'
-import Chatlist from '@/components/Chatlist'
+// import Chatlist from '@/components/Chatlist'
 export default{
   name : "Chat",
   data(){
@@ -17,13 +13,12 @@ export default{
     }
   },
   components: {
-    Chatlist,
-    Inbox
+    // Chatlist,
+    // Inbox
   },
 
   created(){
     this.$store.dispatch('getConversations')
-    this.$store.commit('SET_SELECTGROUP', {id : 'SukaBola4'})
   },
 
   computed: {
