@@ -1,37 +1,39 @@
 <template>
-	<div class="conversation-list w-1/4 rounded">
-      <div class="flex flex-col">
-        <p class="text-xl mt-3 text-white text-center">Chanel lists</p>
-      </div>
-      <div class="mt-6">
-        <button 
-        v-for="group in conversations" :key="group.id"
-        @click="chatbox(group.id)"
-        class="button px-3 py-1 text-left text-md text-black bg-white border-b-2 mb-3 w-75 rounded"># {{group.id}}</button>
-      </div>
-    </div>
+	<div class="grid grid-cols-3 gap-4 conversation-list w-1/2 rounded mx-auto">
+		<div 
+		v-for="group in conversations" :key="group.id"
+		class="mt-6">
+			<a @click.prevent="chatbox(group.id)" href="#">
+				<div class="flex flex-col">
+					<div class="rounded-full max-h-15">
+						<button class="button px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded hover"><i class="far fa-comment-alt"></i> {{group.id}}</button>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
 </template>
 
 <script>
-	export default{
-		name: "ChatList",
-		
-		created(){
-			this.$store.dispatch('getConversations')
-			this.$store.commit('SET_SELECTGROUP', {id : 'SukaBola4'})
-		},
+export default {
+	name: "ChatList",
 
-		computed: {
-			conversations(){
-				return this.$store.state.conversationlists
-			},
-		},
+	created() {
+		this.$store.dispatch("getConversations");
+		this.$store.commit("SET_SELECTGROUP", { id: "SukaBola4" });
+	},
 
-		methods: {
-			chatbox(id){
-				this.$store.commit('SET_SELECTGROUP', {id})
-				this.$router.push({name:'Conversation', params:{id : id}})
-			}
-		}
-	}
+	computed: {
+		conversations() {
+			return this.$store.state.conversationlists;
+		},
+	},
+
+	methods: {
+		chatbox(id) {
+			this.$store.commit("SET_SELECTGROUP", { id });
+			this.$router.push({ name: "Chat", params: { id: id } });
+		},
+	},
+};
 </script>

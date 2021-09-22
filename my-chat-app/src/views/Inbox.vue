@@ -1,11 +1,7 @@
 <template>
-  <div class="w-full rounded mx-auto">
-    <div> 
-        <div id="talkjs-container" style=" width: 100%; height: 720px">
-          <i>Loading chat...</i>
-        </div>
+    <div id="talkjs-container" style="width: 100%; height: 720px">
+      <i>Loading chat...</i>
     </div>
-</div>
 </template>
 
 <script>
@@ -59,7 +55,7 @@ export default {
         conversation.setParticipant(me);
         conversation.setAttributes({
           photoUrl: this.$store.state.user.user.photoUrl,
-          subject: "Group",
+          subject: "Ngobrol bola paling asik",
         });
 
         var chatbox = session.createChatbox(conversation);
@@ -108,4 +104,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  
+</style>

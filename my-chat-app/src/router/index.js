@@ -19,8 +19,8 @@ const routes = [
     component: Login
   },
   {
-    path: '/inbox',
-    name: 'Inbox',
+    path: '/chatbox/:id',
+    name: 'Chat',
     component: Inbox
   },
   {
@@ -36,5 +36,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+/*router.beforeEach((to, from, next) => {
+  let access_token = localStorage.access_token
+  
+  switch (to.name){
+    case "Home":
+    if (access_token) {next()}
+      else next('/login')
+  }
+
+})*/
 
 export default router

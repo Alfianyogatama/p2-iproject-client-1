@@ -12,11 +12,12 @@ export default new Vuex.Store({
     },
     user : {},
     conversationlists: [],
-    chatbox:[]
+    chatbox:[],
+    featureShow:{}
   },
   mutations: {
-    SET_ISLOGIN : (state) => {
-      state.isLogin = true
+    SET_ISLOGIN : (state, payload) => {
+      state.isLogin = payload
     },
 
     SET_USER : (state, payload) => {
@@ -33,6 +34,10 @@ export default new Vuex.Store({
 
     SET_CHATBOX : (state, payload) => {
       state.chatbox = payload.data
+    },
+
+    SET_FEATURE : (state, payload) => {
+      state.featureShow = payload
     }
   },
 
@@ -44,6 +49,7 @@ export default new Vuex.Store({
           commit(`SET_USER`, {
             user: data
           })
+          commit('SET_ISLOGIN', true)
           localStorage.setItem('access_token',  data.access_token)
           return true
 
@@ -56,7 +62,11 @@ export default new Vuex.Store({
 
     getConversations: async ({commit}) => {
       try{
-        const {data} = await api.get('/chats/lists')
+        const {data} = await api.get('/chats/lists', {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         if (data) {
           commit('SET_CONVLISTS', data)
           return data
@@ -66,6 +76,41 @@ export default new Vuex.Store({
         console.log(err);
       }
     },
+
+    getFootballStandings: async({commit}, payload) =>{
+      try{
+        const {data} = await api.get(`/feature/leagues/standings/${payload}`)
+        if (data) {
+          console.log(data);
+          commit('SET_FEATURE', data)
+          return true
+        }
+
+      }
+      catch(err){
+        console.log(err);
+
+      }
+    },
+
+    joinConversation: async({dispatch}, payload) => {
+      try{
+        const {data} = await api.post(`/chats/join`, {conversationId:payload.id},{
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+
+        if (data) {
+          dispatch('getConversations')
+          return true
+        }
+
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
 
     // chatbox: async({commit}, payload) => {
     //   try{
