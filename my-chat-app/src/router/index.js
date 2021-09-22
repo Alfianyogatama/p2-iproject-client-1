@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Conversation from '../views/Conversation.vue'
 import Inbox from '../components/Inbox.vue'
+import Register from '../views/Register.vue'
+import AddGroup from '../views/FormAddGroup.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ const routes = [
     path: '/conversation/:id',
     name: 'Conversation',
     component: Conversation
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/addnewgroup',
+    name: 'Add Group',
+    component: AddGroup
   }
 
 ]

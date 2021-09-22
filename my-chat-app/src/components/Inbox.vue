@@ -58,8 +58,9 @@ export default {
         const conversation = session.getOrCreateConversation(groupIds);
         conversation.setParticipant(me);
         conversation.setAttributes({
-          photoUrl: this.$store.state.user.user.photoUrl,
-          subject: "Group",
+          photoUrl: this.$store.state.groupInfo.group.imageUrl,
+          subject: this.$store.state.groupInfo.group.subject,
+          chatTitleMode: "subject"
         });
 
         var chatbox = session.createChatbox(conversation);
