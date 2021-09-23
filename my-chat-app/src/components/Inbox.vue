@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full rounded mx-auto">
+  <div class="w-3/4 mx-auto rounded mx-auto">
     <div> 
         <div id="talkjs-container" style=" width: 100%; height: 720px">
           <i>Loading chat...</i>

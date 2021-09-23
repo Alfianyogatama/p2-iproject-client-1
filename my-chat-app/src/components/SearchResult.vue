@@ -1,7 +1,7 @@
 <template>
-	<div class="grid grid-cols-1 gap-4 conversation-list w-1/2 rounded mx-auto mt-6">
+	<div class="grid grid-cols-4 gap-4 conversation-list w-1/2 rounded mx-auto mt-6">
 		<div v-if="result.length === 0" class="mt-6">
-			<p class="text-sm italic">Try to search or create new one...</p>
+			<p class="text-sm text-center italic">Try to search or create new one...</p>
 		</div>
 		<div v-if="result.length !== 0">
 			<p>Result: </p>
@@ -10,6 +10,9 @@
 			class="">
 				<a @click.prevent="chatbox(group.name)" href="#">
 					<div class="flex flex-col">
+						<div class="mb-2">
+							<img :src="group.imageUrl" class="rounded-full mx-auto" width="50">
+						</div>
 						<div class="rounded-full max-h-15">
 							<button class="button border-2 border-purple-300 px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded hover"><i class="far fa-comment-alt"></i>#{{group.name}}</button>
 						</div>

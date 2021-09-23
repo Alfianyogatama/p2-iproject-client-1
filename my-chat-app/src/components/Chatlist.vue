@@ -1,14 +1,18 @@
 <template>
-	<div class="grid grid-cols-1 gap-4 conversation-list w-1/2 rounded mx-auto">
-		<div 
+	<div class="grid grid-cols-4 gap-4 conversation-list w-1/2 rounded mx-auto">
+		<div
 		v-for="group in conversations" :key="group.id"
 		class="mt-6">
 			<a @click.prevent="chatbox(group.id)" href="#">
-				<div class="flex flex-col">
+				<div class="flex flex-col min-h-14">
+					<div class="mb-2">
+						<img :src="group.photoUrl" class="rounded-full mx-auto" width="50">
+					</div>
 					<div class="rounded-full max-h-15">
 						<button class="button border-2 border-purple-300 px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded hover"><i class="far fa-comment-alt"></i> {{group.id}}</button>
 					</div>
 					<small class="mt-3 italic chatlist-lastmessage">{{group.welcomeMessages[0]}}</small>
+					<small class="mt-3 italic chatlist-lastmessage">Participants : {{group.participants.length}}</small>
 				</div>
 			</a>
 		</div>
