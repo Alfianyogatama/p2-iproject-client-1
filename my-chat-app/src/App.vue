@@ -2,14 +2,17 @@
   <div id="app">
       <Navbar />
       <router-view />
+      <Hfooter />
   </div>
 </template>
 <script>
   import Navbar from "@/components/Navbar"
+  import Hfooter from "@/components/Hfooter"
   export default{
     name: "App",
     components: {
-      Navbar
+      Navbar,
+      Hfooter
     },
     created(){
       if (localStorage.access_token) {
