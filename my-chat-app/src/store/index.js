@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './../apis'
+import Swal from 'sweetalert2'
 
 
 Vue.use(Vuex)
@@ -17,7 +18,7 @@ export default new Vuex.Store({
     groupInfo:{},
     featureShow:{},
     isLoad: false,
-    searchResult: []
+    searchResult: [],
   },
   mutations: {
     SET_ISLOGIN : (state, payload) => {
@@ -25,7 +26,7 @@ export default new Vuex.Store({
     },
 
     SET_PAGE : (state, payload) => {
-      state.register = payload
+      state.page = payload
     },
 
     SET_USER : (state, payload) => {
@@ -60,18 +61,25 @@ export default new Vuex.Store({
   actions: {
     userLogin : async ({commit}, payload) => {
       try{
+
         const {data} = await api.post('/login', payload.loginData)
         if (data) {
           commit(`SET_USER`, {
             user: data
           })
-          commit('SET_ISLOGIN', true)
           localStorage.setItem('access_token',  data.access_token)
+          localStorage.setItem('chatId',  data.user.chatId)
+          localStorage.setItem('name',  data.user.name)
+          localStorage.setItem('email',  data.user.email)
+          localStorage.setItem('photoUrl',  data.user.photoUrl)
+          commit('SET_ISLOGIN', true)
+          commit('SET_ISLOAD', false)
           return true
         }
       }
       catch(err){
-        console.log(err);
+        commit('SET_ISLOAD', false)
+        Swal.fire('Failed', `${err.response.data.message}`)
       }
     },
 
@@ -79,16 +87,19 @@ export default new Vuex.Store({
       try{
         const {data} = await api.post('/register', payload)
         if (data) {
-          commit(`SET_USER`, {
-            user: data
-          })
-          commit('SET_PAGE', 'app')
+
+          commit('SET_ISLOAD', false)
           localStorage.setItem('access_token',  data.access_token)
+          localStorage.setItem('chatId',  data.user.chatId)
+          localStorage.setItem('name',  data.user.name)
+          localStorage.setItem('email',  data.user.email)
+          localStorage.setItem('photoUrl',  data.user.photoUrl)
           return true
         }
       }
       catch(err){
-        console.log(err.response);
+        commit('SET_ISLOAD', false)
+        Swal.fire('Failed', `${err.response.data.message}`)
       }
     },
 
@@ -100,7 +111,7 @@ export default new Vuex.Store({
           }
         })
         if (data) {
-          commit('SET_CONVLISTS', data.chats)
+          commit('SET_CONVLISTS', data.data)
           return true
         }
       }
@@ -111,7 +122,11 @@ export default new Vuex.Store({
 
     getFootballStandings: async({commit}, payload) =>{
       try{
-        const {data} = await api.get(`/feature/leagues/standings/${payload}`)
+        const {data} = await api.get(`/feature/leagues/standings/${payload}`, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         if (data) {
           console.log(data);
           commit('SET_FEATURE', data)
@@ -141,14 +156,18 @@ export default new Vuex.Store({
 
       }
       catch(err){
-        console.log(err);
+        Swal.fire('Failed', `${err.response.data.message}`)
         throw (err)
       }
     },
 
     getGroupInfo: async({commit}, payload) => {
       try{
-        const {data} = await api.get(`/chats/groups/info/${payload.id}`)
+        const {data} = await api.get(`/chats/groups/info/${payload.id}`, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         
         if (data) {
           commit('SET_GROUPINFO', data)
@@ -161,24 +180,34 @@ export default new Vuex.Store({
       }
     },
 
-    addGroup: async({dispatch}, payload) => {
+    addGroup: async({commit}, payload) => {
       try{
-        const {data} = await api.post(`/chats/groups`, payload)
+        const {data} = await api.post(`/chats/groups`, payload, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         
         if (data) {
-          dispatch('getConversations')
+          commit('SET_ISLOAD', false)
           return true
         }
-
       }
+      
       catch(err){
-        console.log(err.response);
+        commit('SET_ISLOAD', false)
+        Swal.fire('Failed', `${err.response.data.message}`)
+        return false
       }
     },
 
     searchGroup: async({commit}, payload) => {
       try{
-        const {data} = await api.get(`/chats/groups/${payload.id}`)
+        const {data} = await api.get(`/chats/groups/${payload.id}`, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         if (data) {
 
           commit('SET_SEARCHRESULT', data)
@@ -186,7 +215,7 @@ export default new Vuex.Store({
         }
       }
       catch(err){
-        console.log(err.response);
+        console.log(err.response.message);
       }
     }
 

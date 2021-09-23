@@ -1,5 +1,5 @@
 <template>
-  <div class="w-3/4 mx-auto rounded mx-auto">
+  <div class="mx-auto rounded mx-auto">
     <div> 
         <div id="talkjs-container" style=" width: 100%; height: 720px">
           <i>Loading chat...</i>
@@ -42,11 +42,11 @@ export default {
 
       Talk.ready.then(() => {
         const me = new Talk.User({
-          id: this.$store.state.user.user.id,
-          name: this.$store.state.user.user.name,
-          email: this.$store.state.user.user.email,
-          photoUrl: this.$store.state.user.user.photoUrl,
-          welcomeMessage: "Hey, it`s me",
+          id: localStorage.chatId,
+          name: localStorage.name,
+          email: localStorage.email,
+          photoUrl: localStorage.photoUrl,
+          welcomeMessage: `Hey, it's me ${localStorage.name}`,
           role: "discord",
         });
 
@@ -54,16 +54,25 @@ export default {
           appId: "twoPwBx0",
           me: me,
         });
+        
         const groupIds = this.groupId
         const conversation = session.getOrCreateConversation(groupIds);
         conversation.setParticipant(me);
         conversation.setAttributes({
-          photoUrl: this.$store.state.groupInfo.group.imageUrl,
-          subject: this.$store.state.groupInfo.group.subject,
+          photoUrl: this.$store.state.groupInfo.photoUrl,
+          subject: this.$store.state.groupInfo.subject,
           chatTitleMode: "subject"
         });
 
         var chatbox = session.createChatbox(conversation);
+
+        if (chatbox) {
+          Swal.fire({
+            title: "Command list",
+            html: "<p>There are many command list you can use to get recent standing in a league</p> <br> <p>!standing</p> <p>EPL/ indonesia / Serie A/ French/Bundesliga)</p>",
+          })
+        }
+
         chatbox.mount(document.getElementById("talkjs-container"));
         chatbox.on("sendMessage", (handler) => {
 
@@ -94,7 +103,6 @@ export default {
 
           if (payload) {
             this.callFeature(payload)
-
           }
 
         });

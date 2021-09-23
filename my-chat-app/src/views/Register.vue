@@ -1,5 +1,5 @@
 <template>
-	<div class="w-3/4 mx-auto min-h-screen bg-gray-800 flex flex-wrap content-center">
+	<div class="min-h-screen bg-gray-800 flex flex-wrap content-center">
 		<form
 			@submit.prevent="signUp"
 			class="w-full mx-auto max-w-sm border-2 border-purple-500 py-5 px-3 rounded-xl shadow-2xl"
@@ -94,8 +94,8 @@
 						class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 text-sm"
 					>
 						<option disabled value="">Select one</option>
-						<option value="male"><i class="fas fa-mars"></i> Male</option>
-						<option value="female"><i class="fas fa-venus"></i> Female</option>
+						<option value="male"><i class="fas fa-mars"></i> male</option>
+						<option value="female"><i class="fas fa-venus"></i> female</option>
 					</select>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 						class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
 						type="submit"
 					>
-						Sign In
+						Sign Up
 					</button>
 				</div>
 			</div>
@@ -143,6 +143,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
 	name: "Login",
 	data() {
@@ -168,7 +169,7 @@ export default {
 		},
 
 		async signUp() {
-
+			
 			this.$store.commit("SET_ISLOAD", true);
 			const form = new FormData();
 			form.append("name", this.signUpData.name);
@@ -179,8 +180,13 @@ export default {
 
 			const result = await this.$store.dispatch("userSignUp", form);
 			if (result) {
+				Swal.fire({
+					text: 'You are Signed Up Successfully , please login',
+					icon: 'success'
+				})
 				this.$router.push("/");
-				this.$store.commit("SET_ISLOAD", true);
+				this.$store.commit("SET_ISLOAD", false);
+
 			}
 		},
 	},
