@@ -1,5 +1,5 @@
 <template>
-	<div class="w-3/4 mx-auto min-h-screen bg-gray-800 flex flex-wrap content-center">
+	<div class="min-h-screen bg-gray-800 flex flex-wrap content-center p-6">
 		<div class="w-full mx-auto text-purple-700 mb-6">
 			<h1 class="text-3xl">Create new group within 1 minutes!</h1>
 		</div>
@@ -94,7 +94,7 @@
 					class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
 					type="submit"
 				>
-					Sign Up
+					Add
 				</button>
 			</div>
 
@@ -114,6 +114,7 @@
 	</div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 export default {
 	name: "AddGroup",
 	data() {
@@ -139,19 +140,32 @@ export default {
 		},
 
 		async addGroup() {
+			try{
+				this.$store.commit("SET_ISLOAD", true);
+				const form = new FormData();
+				form.append("name", this.addData.name);
+				form.append("subject", this.addData.subject);
+				form.append("topic", this.addData.topic);
+				form.append("message", this.addData.message);
+				form.append("image", this.addData.image);
 
-			this.$store.commit("SET_ISLOAD", true);
-			const form = new FormData();
-			form.append("name", this.addData.name);
-			form.append("subject", this.addData.subject);
-			form.append("topic", this.addData.topic);
-			form.append("message", this.addData.message);
-			form.append("image", this.addData.image);
+				const result = await this.$store.dispatch("addGroup", form);
+				if (result) {
+					const updateList = this.$store.dispatch("getConversations")
+					if (updateList) {
+						Swal.fire({
+							text: 'New group successfully created',
+							icon: 'success'
+						})
 
-			const result = await this.$store.dispatch("addGroup", form);
-			if (result) {
-				this.$router.push("/");
-				this.$store.commit("SET_ISLOAD", false);
+						this.$store.commit("SET_ISLOAD", false);
+						this.$router.push("/");
+					}
+
+				}
+
+			}catch(err){
+				console.log(err);
 			}
 		},
 	},

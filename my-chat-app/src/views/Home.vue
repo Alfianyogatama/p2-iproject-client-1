@@ -1,18 +1,10 @@
 <template>
-  <div class="w-3/4 mx-auto bg-gray-800">
+  <div class="bg-gray-800">
     <div
       class="home min-h-screen conversation-list shadow-xl w-full border border-4 border-purple-800 rounded mx-auto"
     >
       <div class="flex justify-around">
-        <div>
-          <router-link to="/addnewgroup">
-            <button
-              class="text-sm mt-6 text-white text-center hover:bg-gray-100 rounded py-1 px-2 hover:text-gray-800"
-            >
-              <i class="fas fa-plus"></i> add Group
-            </button>
-          </router-link>
-        </div>
+        
         <div class="text-sm">
           <form class="flex space-x-1 w-full mt-6 items-center">
             <div class="w-1/3">
@@ -30,6 +22,18 @@
             </div>
           </form>
         </div>
+
+
+        <div>
+          <router-link to="/addnewgroup">
+            <button
+              class="text-sm mt-6 text-white text-center hover:bg-gray-100 rounded py-1 px-2 hover:text-gray-800"
+            >
+              <i class="fas fa-plus"></i> add Group
+            </button>
+          </router-link>
+        </div>
+        
       </div>
       <div class="mt-6 text-white">
         <p class="text-md">Joining :</p>
