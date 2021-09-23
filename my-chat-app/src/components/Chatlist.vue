@@ -1,26 +1,38 @@
 <template>
-	<div class="grid grid-cols-4 gap-4 conversation-list w-1/2 rounded mx-auto">
-		<div
-		v-for="group in conversations" :key="group.id"
-		class="mt-6">
-			<a @click.prevent="chatbox(group.id)" href="#">
-				<div class="flex flex-col min-h-14">
-					<div class="mb-2">
-						<img :src="group.photoUrl" class="rounded-full mx-auto" width="50">
-					</div>
-					<div class="rounded-full max-h-15">
-						<button class="button border-2 border-purple-300 px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded hover"><i class="far fa-comment-alt"></i> {{group.id}}</button>
-					</div>
-					<small class="mt-3 italic chatlist-lastmessage">{{group.welcomeMessages[0]}}</small>
-					<small class="mt-3 italic chatlist-lastmessage">Participants : {{group.participants.length}}</small>
-				</div>
-			</a>
+
+	<div>
+		<div v-if="conversations.length === 0"
+		class="mx-auto mt-6 italic" 
+		>
+		<p>You have not join any group</p>
+		<p>Create or search ...</p>
+		<small> ex: #EPL</small>
 		</div>
-		<div v-if="conversations.length === 0" class="mt-6">
-			<p class="text-sm italic">You have not join in any group</p>
-			<p class="text-sm italic">Create or search one to start chat....</p>
+		<div v-else class="grid grid-cols-4 gap-6 conversation-list w-3/4 rounded mx-auto">
+
+			<div
+			v-for="group in conversations" :key="group.id"
+			class="mt-6">
+				<a @click.prevent="chatbox(group.name)" href="#">
+					<div class="flex flex-col min-h-40 max-h-40 p-2 hover:shadow-xl">
+						<div class="mb-2 flex-grow">
+							<img :src="group.photoUrl" class="rounded-xl mx-auto" width="50" >
+						</div>
+						<div  class="flex-grow rounded-full max-h-15">
+							<button class="button border-2 border-purple-300 px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded hover"><i class="far fa-comment-alt"></i> {{group.name}}</button>
+						</div>
+						<div class="flex-grow rounded-full max-h-15">
+							<button class="button text-white text-sm rounded hover mt-2">Topic: {{group.subject}}</button>
+						</div>
+						<div class="flex-none">
+							<small class="italic chatlist-lastmessage">{{group.welcomeMessages[0]}}</small>
+						</div>
+					</div>
+				</a>
+			</div>
 		</div>
 	</div>
+	
 </template>
 
 <script>
